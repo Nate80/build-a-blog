@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>New-Post</title>
+    </head>
+
+    <body>
+
+        <hr>
+        {% for newpost in NewPosts %}
+            <div class="newpost">
+                <div class="newpost-title">{{newpost.title}}</div>
+                <pre class="newpost-body">{{newpost.newpost}}</pre>
+            </div>
+        {% endfor %}
+
+    </body>
+
+
+</html>

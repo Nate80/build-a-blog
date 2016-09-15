@@ -64,33 +64,11 @@
     </style>
 
     <body>
-        <h1>build-a-blog</h1>
+        <h1>My Blog</h1>
 
-        <form method="post">
-            <label>
-                <div>title</div>
-                <input type="text" name="title" value="{{title}}">
-            </label>
-
-            <label>
-                <div>newpost</div>
-                <textarea name="newpost">{{newpost}}</textarea>
-            </label>
-
-            <div class="error">{{error}}</div>
-
-            <input type="submit">
-        </form>
-
-        <hr>
-        {% for newpost in NewPosts %}
-            <div class="newpost">
-                <div class="newpost-title">{{newpost.title}}</div>
-                <pre class="newpost-body">{{newpost.newpost}}</pre>
-            </div>
-        {% endfor %}
-
+        {% block content %}
+        {% endblock %}
     </body>
 
-    
+
 </html>

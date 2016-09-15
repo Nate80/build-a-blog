@@ -1,13 +1,6 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
-    <head>
-        <title>New-Post</title>
-    </head>
-
-    <body>
-        <h1>build-a-blog</h1>
-
+{% block content %}
         <form method="post">
             <label>
                 <div>title</div>
@@ -16,23 +9,20 @@
 
             <label>
                 <div>newpost</div>
-                <textarea name="newpost">{{newpost}}</textarea>
+                <textarea name="entry">{{entry}}</textarea>
             </label>
 
             <div class="error">{{error}}</div>
 
             <input type="submit">
         </form>
-        
+
         <hr>
-        {% for newpost in NewPosts %}
-            <div class="newpost">
-                <div class="newpost-title">{{newpost.title}}</div>
-                <pre class="newpost-body">{{newpost.newpost}}</pre>
+        {% for entry in entries %}
+            <div class="entry">
+                <div class="newpost-title">{{entry.title}}</div>
+                <pre class="newpost-body">{{entry.entry}}</pre>
             </div>
         {% endfor %}
 
-    </body>
-
-
-</html>
+{% endblock %}

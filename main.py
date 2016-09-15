@@ -35,36 +35,36 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
-class NewPost(db.Model):
+class NewEntry(db.Model):
     title = db.StringProperty(required = True)
-    newpost = db.TextProperty(required = True)
+    entry = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
     modified = db.DateTimeProperty(auto_now_add = True)
 
 
 class MainBlogHandler(Handler):
-    def render_base(self, title="", newpost="", error=""):
-        newposts = db.GqlQuery("SELECT * FROM NewPost "
-                                "ORDER BY created DESC",
-                                "LIMIT 5")
+    def render_front(self, title="", entry="", error=""):
+        entries = db.GqlQuery("SELECT * FROM NewEntry "
+                                "ORDER BY created DESC")
 
-        self.render("base.html", title=title, newpost=newpost, error=error, newposts=newposts)
+
+        self.render("new-post.html", title=title, entry=entry, error=error, entries=entries)
 
     def get(self):
-        self.render_base()
+        self.render_front()
 
     def post(self):
         title = self.request.get("title")
-        newpost = self.request.get("newpost")
+        entry = self.request.get("entry")
 
-        if title and newpost:
-            np = NewPost(title = title, newpost = newpost)
-            np.put()
+        if title and entry:
+            ne = NewEntry(title = title, entry = entry)
+            ne.put()
 
             self.redirect("/")
         else:
             error = "We need a title and an entry!"
-            self.render_base(title, newpost, error)
+            self.render_front(title, entry, error)
 
 
 app = webapp2.WSGIApplication([

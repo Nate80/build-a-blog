@@ -45,8 +45,20 @@ class NewEntry(db.Model):
 class MainBlogHandler(Handler):
     def render_front(self, title="", entry="", error=""):
         entries = db.GqlQuery("SELECT * FROM NewEntry "
-                                "ORDER BY created DESC")
+                                "ORDER BY created DESC "
+                                "LIMIT 5")
 
+
+        self.render("blog.html", title=title, entry=entry, error=error, entries=entries)
+
+    def get(self):
+        self.render_front()
+
+class NewPostHandler(Handler):
+    def render_front(self, title="", entry="", error=""):
+        entries = db.GqlQuery("SELECT * FROM NewEntry "
+                                "ORDER BY created DESC "
+                                "LIMIT 5")
 
         self.render("new-post.html", title=title, entry=entry, error=error, entries=entries)
 
@@ -61,12 +73,13 @@ class MainBlogHandler(Handler):
             ne = NewEntry(title = title, entry = entry)
             ne.put()
 
-            self.redirect("/")
+            self.redirect("/blog")
         else:
             error = "We need a title and an entry!"
             self.render_front(title, entry, error)
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainBlogHandler),
+    ('/blog', MainBlogHandler),
+    ('/newpost', NewPostHandler)
 ], debug=True)

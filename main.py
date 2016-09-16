@@ -73,7 +73,10 @@ class NewPostHandler(Handler):
             ne = NewEntry(title = title, entry = entry)
             ne.put()
 
-            self.redirect("/blog")
+            x = str(ne.key().id())
+            self.redirect('blog/%s ' % x)
+
+            #self.redirect("/blog")
         else:
             error = "We need a title and an entry!"
             self.render_front(title, entry, error)
@@ -84,8 +87,9 @@ class ViewPostHandler(Handler):
         int_id = int(id)
         new_post = NewEntry.get_by_id(int_id)
 
+
         if new_post:
-            new_post = new_post.title
+            new_post = new_post.title + new_post.entry
             self.response.out.write(new_post)
         else:
             error = "That is not a valid id"

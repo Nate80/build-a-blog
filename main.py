@@ -78,8 +78,22 @@ class NewPostHandler(Handler):
             error = "We need a title and an entry!"
             self.render_front(title, entry, error)
 
+#class ViewPostHandler(webapp2.RequestHandler):
+class ViewPostHandler(Handler):
+    def get(self, id):
+        int_id = int(id)
+        new_post = NewEntry.get_by_id(int_id)
+
+        if new_post:
+            new_post = new_post.title
+            self.response.out.write(new_post)
+        else:
+            error = "That is not a valid id"
+            self.response.out.write(error)
+
 
 app = webapp2.WSGIApplication([
-    ('/blog', MainBlogHandler),
-    ('/newpost', NewPostHandler)
+    webapp2.Route(r'/blog', handler=MainBlogHandler, name='front_page'),
+    webapp2.Route(r'/newpost', handler=NewPostHandler, name="newpost"),
+    webapp2.Route(r'/blog/<id:\d+>', handler=ViewPostHandler, name="id")
 ], debug=True)

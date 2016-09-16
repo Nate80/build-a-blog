@@ -3,13 +3,16 @@
 {% block content %}
 
 
-<hr>
+
 {% for entry in entries %}
     <div class="entry">
         <div class="newpost-title">{{entry.title}}</div>
         <pre class="newpost-body">{{entry.entry}}</pre>
+        
     </div>
 {% endfor %}
+
+
 
 
 {% endblock %}

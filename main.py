@@ -87,10 +87,9 @@ class ViewPostHandler(Handler):
         int_id = int(id)
         new_post = NewEntry.get_by_id(int_id)
 
-
         if new_post:
-            new_post = new_post.title + new_post.entry
-            self.response.out.write(new_post)
+            #new_post = new_post.title + new_post.entry
+            self.render('/permalink.html', new_post=new_post)
         else:
             error = "That is not a valid id"
             self.response.out.write(error)
